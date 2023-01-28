@@ -1,0 +1,20 @@
+name: cirotex
+services:
+  db:
+    container_name: ciro_db
+    image: mongo
+    volumes:
+      - db_data:/data/db
+    ports:
+      - 27017:27017
+  search:
+    container_name: ciro_search
+    image: getmeili/meilisearch
+    volumes:
+      - search_data:/meili_data
+    ports:
+      - 7700:7700
+volumes:
+  db_data:
+  search_data:
+
