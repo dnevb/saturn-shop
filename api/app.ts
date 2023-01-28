@@ -1,4 +1,5 @@
 import fastifyAutoload from "@fastify/autoload";
+import fastifyJwt from "@fastify/jwt";
 import fastifyMongodb from "@fastify/mongodb";
 import fastifySensible from "@fastify/sensible";
 import { fastifySwagger } from "@fastify/swagger";
@@ -22,6 +23,15 @@ export default fp(async (app, opts) => {
         title: "API",
         version: pkg.version,
       },
+      components: {
+        securitySchemes: {
+          apiKey: {
+            type: "apiKey",
+            in: "header",
+            name: "Authorization",
+          },
+        },
+      },
     },
   });
   app.register(fastifySwaggerUi, {
@@ -30,9 +40,14 @@ export default fp(async (app, opts) => {
       deepLinking: true,
     },
   });
+  app.register(fastifyJwt, {
+    secret: process.env["SECRET"]!,
+  });
   app.register(fastifySensible);
   app.register(fastifyAutoload, {
     dir: join(__dirname, "modules"),
+    autoHooks: true,
+    cascadeHooks: true,
     options: opts,
   });
 });
