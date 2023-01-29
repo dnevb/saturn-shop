@@ -4,6 +4,7 @@ import fastifyMongodb from "@fastify/mongodb";
 import fastifySensible from "@fastify/sensible";
 import { fastifySwagger } from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
+import { MeiliSearch } from "meilisearch";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import pkg from "./package.json" assert { type: "json" };
@@ -13,23 +14,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default fp(async (app, opts) => {
+  const search = new MeiliSearch({ host: "http://localhost:7700" });
+  app.decorate("search", search);
+
   app.register(fastifyMongodb, {
     forceClose: true,
     url: process.env["DB_URL"]!,
   });
   app.register(fastifySwagger, {
     openapi: {
-      info: {
-        title: "API",
-        version: pkg.version,
-      },
+      info: { title: "API", version: pkg.version },
       components: {
         securitySchemes: {
-          apiKey: {
-            type: "apiKey",
-            in: "header",
-            name: "Authorization",
-          },
+          apiKey: { type: "apiKey", in: "header", name: "Authorization" },
         },
       },
     },

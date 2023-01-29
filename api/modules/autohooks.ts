@@ -2,12 +2,14 @@ import fp from "../utils/fp.js";
 
 export default fp(async (app) => {
   // token validation
-  app.addHook("onRequest", async (req) => {
+  app.addHook("onRequest", async (req, res) => {
     if (req.url.includes(".auth")) return;
 
-    const [err] = await app.to(req.jwtVerify());
+    var [err] = await app.to(req.jwtVerify());
 
-    if (err) throw app.httpErrors.unauthorized(err.message);
+    if (err) return res.unauthorized(err.message);
+
+    return;
   });
 
   // decorate routes
