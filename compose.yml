@@ -14,6 +14,15 @@ services:
       - search_data:/meili_data
     ports:
       - 7700:7700
+  api:
+    container_name: ciro_api
+    build: ./api
+    command: start
+    environment:
+      DB_URL: mongodb://db:27017/main
+      SECRET: ${MASTER_KEY}
+    ports:
+      - 8080:3000
 volumes:
   db_data:
   search_data:
