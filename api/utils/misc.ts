@@ -45,7 +45,7 @@ export const createFindRoute = <T extends ZodRawShape>(
 ) =>
   app.route<{ Querystring: { q: string; filter: string } }>({
     method: "GET",
-    url: "",
+    url: "/",
     schema: {
       tags: [noCase(index)],
       querystring: { q: { type: "string" }, filter: { type: "string" } },
@@ -62,7 +62,7 @@ export const createFindRoute = <T extends ZodRawShape>(
     },
   });
 
-export const createGetRoutes = <T extends ZodRawShape>(
+export const createQueryRoutes = <T extends ZodRawShape>(
   index: string,
   schema: ZodObject<T>
 ) =>

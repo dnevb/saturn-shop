@@ -1,5 +1,5 @@
 import type MeiliSearch from "meilisearch";
-import type { User } from "./auth/schema";
+import type { User } from "./modules/auth/schema";
 
 export declare module "@fastify/jwt" {
   interface FastifyJWT {

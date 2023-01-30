@@ -43,6 +43,7 @@ export default fp(async (app, opts) => {
   app.register(fastifySensible);
   app.register(fastifyAutoload, {
     dir: join(__dirname, "modules"),
+    ignorePattern: /schema.js/,
     autoHooks: true,
     cascadeHooks: true,
     options: opts,
