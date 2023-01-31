@@ -9,10 +9,7 @@ const T: FC<TProps> = (props) => {
   const size = props.size || "p";
   return createElement(
     size,
-    {
-      ...props,
-      className: clsx(sizes[size], props.className),
-    },
+    { ...props, className: clsx(sizes[size], props.className) },
     props.children
   );
 };
@@ -24,7 +21,7 @@ const sizes = {
   h4: "text-2xl font-bold",
   h5: "text-1xl font-bold",
   h6: "text-xl font-bold",
-  p: "font-light text-gray-500 ",
+  p: "font-light text-gray-400 ",
 };
 
 export default T;
