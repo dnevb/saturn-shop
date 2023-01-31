@@ -3,10 +3,18 @@ services:
   db:
     container_name: sat_db
     image: mongo
+    restart: always
     volumes:
       - db_data:/data/db
     ports:
       - 27017:27017
+  db_ui:
+    container_name: sat_db_ui
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://db:27017/
+    ports:
+      - 8081:8081
   search:
     container_name: sat_search
     image: getmeili/meilisearch
