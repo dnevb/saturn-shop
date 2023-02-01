@@ -55,7 +55,7 @@ const AdminSidebar = () => {
         </div>
         <ul className="space-y-2 grow overflow-y-auto">
           {items.map((item) => (
-            <NavLink to={item.to}>
+            <NavLink to={item.to} key={item.to}>
               {({ isActive }) => (
                 <li
                   className={clsx(styles.item, isActive && styles.active)}

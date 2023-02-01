@@ -1,4 +1,5 @@
 import fastifyAutoload from "@fastify/autoload";
+import fastifyCors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
 import fastifyMongodb from "@fastify/mongodb";
 import fastifySensible from "@fastify/sensible";
@@ -14,13 +15,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default fp(async (app, opts) => {
-  const search = new MeiliSearch({ host: "http://localhost:7700" });
+  const search = new MeiliSearch({ host: process.env["SEARCH_URL"]! });
   app.decorate("search", search);
 
   app.register(fastifyMongodb, {
     forceClose: true,
     url: process.env["DB_URL"]!,
   });
+  app.register(fastifyCors);
   app.register(fastifySwagger, {
     openapi: {
       info: { title: "API", version: pkg.version },

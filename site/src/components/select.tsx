@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import { forwardRef, InputHTMLAttributes, useId } from "react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLSelectElement> {
   label?: string;
 }
 
-const Input = forwardRef<any, InputProps>((props, ref) => {
+const Select = forwardRef<any, InputProps>((props, ref) => {
   const uid = useId();
   const id = props.id || uid;
   return (
@@ -13,7 +13,7 @@ const Input = forwardRef<any, InputProps>((props, ref) => {
       <label htmlFor={id} className={styles.label}>
         {props.label}
       </label>
-      <input
+      <select
         {...props}
         ref={ref}
         id={id}
@@ -37,4 +37,4 @@ const styles = {
   colors: "bg-gray-50 focus:ring-blue-500 outline-none",
 };
 
-export default Input;
+export default Select;

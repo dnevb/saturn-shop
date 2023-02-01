@@ -1,19 +1,25 @@
 import clsx from "clsx";
-import { forwardRef, InputHTMLAttributes, useId } from "react";
+import { forwardRef, TextareaHTMLAttributes, useId } from "react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface TextAreaProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
 }
 
-const Input = forwardRef<any, InputProps>((props, ref) => {
+const TextArea = forwardRef<any, TextAreaProps>((props, ref) => {
   const uid = useId();
   const id = props.id || uid;
+
   return (
     <div>
-      <label htmlFor={id} className={styles.label}>
+      <label
+        htmlFor={id}
+        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >
         {props.label}
       </label>
-      <input
+      <textarea
+        rows={4}
         {...props}
         ref={ref}
         id={id}
@@ -24,11 +30,10 @@ const Input = forwardRef<any, InputProps>((props, ref) => {
           styles.colors,
           props.className
         )}
-      />
+      ></textarea>
     </div>
   );
 });
-
 const styles = {
   label: "block mb-2 text-sm font-medium text-gray-900",
   shape: "rounded-lg p-2.5 w-full block",
@@ -37,4 +42,4 @@ const styles = {
   colors: "bg-gray-50 focus:ring-blue-500 outline-none",
 };
 
-export default Input;
+export default TextArea;

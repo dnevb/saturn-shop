@@ -2,11 +2,20 @@ import {
   defineConfig,
   presetIcons,
   presetUno,
+  presetWebFonts,
   transformerVariantGroup,
 } from "unocss";
 
 export default defineConfig({
-  presets: [presetUno(), presetIcons()],
+  presets: [
+    presetUno(),
+    presetIcons(),
+    presetWebFonts({
+      fonts: {
+        sans: "Mukta",
+      },
+    }),
+  ],
   transformers: [transformerVariantGroup()],
   theme: {
     colors: {

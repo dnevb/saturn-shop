@@ -28,6 +28,7 @@ services:
     command: start
     environment:
       DB_URL: mongodb://db:27017/main
+      SEARCH_URL: http://search:7700
       SECRET: ${MASTER_KEY}
     ports:
       - 8080:3000

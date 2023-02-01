@@ -6,6 +6,7 @@ export const categorySchema = BaseModel.extend({
   slug: z.string().optional(),
   user_id: z.string().optional(),
   description: z.string().optional(),
+  uri: z.string().optional(),
   total_products: z.number().default(0),
   parent_id: z.string().optional(),
   is_root: z.boolean().optional(),

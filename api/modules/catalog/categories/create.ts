@@ -4,7 +4,12 @@ import fp from "../../../utils/fp.js";
 import { pick } from "../../../utils/model.js";
 import { Category, categorySchema } from "./schema.js";
 
-const body = pick(categorySchema, ["name", "description", "parent_id"]);
+const body = pick(categorySchema, [
+  "name",
+  "description",
+  "uri",
+  "parent_id",
+]);
 
 export default fp(async (app) => {
   app.route<{ Body: Category }>({
