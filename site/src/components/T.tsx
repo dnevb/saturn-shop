@@ -9,7 +9,10 @@ const T: FC<TProps> = (props) => {
   const size = props.size || "p";
   return createElement(
     size,
-    { ...props, className: clsx(sizes[size], props.className) },
+    {
+      ...props,
+      className: clsx(sizes[size], "text-gray-800", props.className),
+    },
     props.children
   );
 };

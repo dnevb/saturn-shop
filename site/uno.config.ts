@@ -5,11 +5,13 @@ import {
   presetWebFonts,
   transformerVariantGroup,
 } from "unocss";
+import { presetScrollbar } from "unocss-preset-scrollbar";
 
 export default defineConfig({
   presets: [
     presetUno(),
     presetIcons(),
+    presetScrollbar(),
     presetWebFonts({
       fonts: { sans: "Lato" },
     }),

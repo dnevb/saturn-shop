@@ -22,8 +22,8 @@ const ProductGridSearch = () => {
         className={styles.sort}
       >
         <option value="name:asc">Name</option>
-        <option value="price:desc">Price</option>
-        <option value="stock:desc">Stock</option>
+        <option value="price:desc">Price (desc)</option>
+        <option value="stock:desc">Stock (desc)</option>
       </select>
     </div>
   );

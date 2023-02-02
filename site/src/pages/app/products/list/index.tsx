@@ -48,7 +48,7 @@ const ProductGrid = () => {
 
 const styles = {
   root: "max-w-4xl lg:max-w-7xl mx-auto flex gap8 hfull",
-  body: "grow py6 px4 overflow-y-auto",
+  body: "grow py6 px4 overflow-y-auto scrollbar scrollbar-w-0",
   grid: "grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4 ",
 };
 
