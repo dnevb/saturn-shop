@@ -43,12 +43,16 @@ export const createFindRoute = <T extends ZodRawShape>(
   index: string,
   schema: ZodObject<T>
 ) =>
-  app.route<{ Querystring: { q: string; filter: string } }>({
+  app.route<{ Querystring: { q: string; filter: string; sort: string } }>({
     method: "GET",
     url: "/",
     schema: {
       tags: [noCase(index)],
-      querystring: { q: { type: "string" }, filter: { type: "string" } },
+      querystring: {
+        q: { type: "string" },
+        filter: { type: "string" },
+        sort: { type: "string" },
+      },
       response: {
         200: zodToJsonSchema(
           searchSchema.extend({ hits: schema.array() })
@@ -57,8 +61,12 @@ export const createFindRoute = <T extends ZodRawShape>(
     },
     handler: async (req) => {
       const col = app.search.index(index);
+      const sort = req.query["sort"];
 
-      return col.search(req.query["q"], { filter: req.query["filter"] });
+      return col.search(req.query["q"], {
+        filter: req.query["filter"] || "",
+        sort: sort ? [sort] : [],
+      });
     },
   });
 

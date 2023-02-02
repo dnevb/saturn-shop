@@ -11,9 +11,7 @@ export default defineConfig({
     presetUno(),
     presetIcons(),
     presetWebFonts({
-      fonts: {
-        sans: "Mukta",
-      },
+      fonts: { sans: "Lato" },
     }),
   ],
   transformers: [transformerVariantGroup()],
