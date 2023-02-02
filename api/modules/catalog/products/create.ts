@@ -11,6 +11,7 @@ const body = pick(productSchema, [
   "price",
   "stock",
   "category",
+  "uri",
 ]);
 
 export default fp(async (app) => {
@@ -33,11 +34,28 @@ export default fp(async (app) => {
       };
 
       const col = app.mongo.db!.collection("products");
+      const categories = app.mongo.db!.collection("categories");
 
       await Promise.all([
         col.insertOne(doc),
         app.search.index("products").addDocuments([doc]),
       ]);
+
+      if (doc.category) {
+        const cat = await categories.findOne({ _id: doc.category!._id });
+        if (cat) {
+          const total = cat["total_products"] + 1;
+          await Promise.all([
+            categories.updateOne(
+              { _id: cat._id },
+              { $set: { total_products: total } }
+            ),
+            app.search
+              .index("categories")
+              .updateDocuments([{ _id: cat._id, total_products: total }]),
+          ]);
+        }
+      }
 
       return doc;
     },

@@ -19,6 +19,10 @@ const CategoryCard: FC<any> = (props) => {
         <div>
           <p className="text-xl">{props["name"]}</p>
           <p className="text-gray-600">
+            <span className="text-black">Products: </span>
+            {props["total_products"]}
+          </p>
+          <p className="text-gray-600">
             <span className="text-black">Created: </span>
             {date}
           </p>
@@ -30,8 +34,8 @@ const CategoryCard: FC<any> = (props) => {
 
 const styles = {
   item: [
-    "p2 bg-gray-200 rounded-xl my1 flex gap4 items-center",
-    "hover:bg-gray-300",
+    "p2 shadow rounded-xl my1 flex gap4 items-center",
+    "hover:bg-gray-100",
   ],
 };
 
