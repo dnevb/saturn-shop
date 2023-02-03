@@ -32,7 +32,7 @@ const CartPage = () => {
   if (isLoading) return <Spinner />;
 
   const content = data.total_products ? (
-    <ul className="my6 hfull">
+    <ul className="my6 ">
       {data?.products.map((item: any) => (
         <li key={item["_id"]} className={styles.item}>
           <img src={item["uri"]} className={styles.img} />
@@ -55,13 +55,8 @@ const CartPage = () => {
           <Icon
             className="h6 w6 mr6 cursor-pointer text-gray-500"
             icon="material-symbols:delete-outline-rounded"
-          />
-          {/* <T
-            className="text-red-6 cursor-pointer"
             onClick={() => rm(item["_id"])}
-          >
-            Remove
-          </T> */}
+          />
         </li>
       ))}
     </ul>
@@ -74,21 +69,19 @@ const CartPage = () => {
       <T size="h4">Shopping Cart </T>
       {content}
       {!!data?.total_products && (
-        <div>
-          <Button className="wfull text-xl" onClick={complete}>
-            Complete order with Total:
-            <strong>
-              $<Price price={data["total_price"]} />
-            </strong>
-          </Button>
-        </div>
+        <Button className="wfull text-xl" onClick={complete}>
+          Complete order with Total:
+          <strong>
+            $<Price price={data["total_price"]} />
+          </strong>
+        </Button>
       )}
     </div>
   );
 };
 
 const styles = {
-  root: "max-w-5xl mxa gap8 py4",
+  root: "max-w-5xl mxa gap8 py4 overflow-y-auto hfull scrollbar scrollbar-w-0",
   item: "flex items-center gap2 p2 rounded-lg bg-white wfull shadow my2",
   img: "h30 w30 object-cover rounded-lg",
 };
