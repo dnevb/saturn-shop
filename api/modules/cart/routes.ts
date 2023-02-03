@@ -14,12 +14,25 @@ export default fp(async (app) => {
     url: "/complete",
     handler: async (req) => {
       const user_id = req.user["_id"];
+      const col = app.mongo.db!.collection("products");
       let cart = await getCart(user_id, app);
       cart.active = false;
 
       await app.mongo
         .db!.collection("cart")
         .updateOne({ _id: cart._id }, { $set: { active: false } });
+
+      for await (let p of cart.products) {
+        const current = await col.findOne({ _id: p._id });
+        let stock = current!["stock"] - p.stock;
+        if (stock < 0) stock = 0;
+        await Promise.all([
+          col.updateOne({ _id: current!._id }, { $set: { stock } }),
+          app.search
+            .index("products")
+            .updateDocuments([{ _id: current!._id, stock }]),
+        ]);
+      }
 
       return cart;
     },
