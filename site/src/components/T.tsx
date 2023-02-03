@@ -11,7 +11,7 @@ const T: FC<TProps> = (props) => {
     size,
     {
       ...props,
-      className: clsx(sizes[size], "text-gray-800", props.className),
+      className: clsx(sizes[size], "text-gray-600", props.className),
     },
     props.children
   );
@@ -22,7 +22,7 @@ const sizes = {
   h2: "text-4xl font-bold",
   h3: "text-3xl font-bold",
   h4: "text-2xl font-bold",
-  h5: "text-1xl font-bold",
+  h5: "text-xl font-bold",
   h6: "text-xl font-bold",
   p: "font-light text-gray-500 ",
 };

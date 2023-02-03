@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { authState } from "states/auth";
+import Spinner from "./spinner";
 
 interface AuthGuardProps {
   children: JSX.Element;
@@ -9,19 +10,18 @@ interface AuthGuardProps {
 }
 
 const AuthGuard: FC<AuthGuardProps> = ({ children, noauth }) => {
+  const [ready, setready] = useState(false);
   const auth = useRecoilValue(authState);
   const nav = useNavigate();
-  const [ready, setready] = useState(false);
 
   useEffect(() => {
     if (!auth) nav("signin");
-    else if (auth.user["role"] == "admin") nav("admin");
     else nav("/");
 
     setready(true);
   }, [auth]);
 
-  if (!ready) return <i className="i-ei-spinner-3" />;
+  if (!ready) return <Spinner />;
 
   return children;
 };

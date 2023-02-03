@@ -8,7 +8,9 @@ const AdminHeader = () => {
       <nav className="px6 py2.5 flex bg-gray-800 text-white">
         <Link to="/admin" className="flex gap4 items-center select-none">
           <Logo className="h10 w10 text-brand" />
-          <T size="h4">Saturn shop</T>
+          <T size="h4" className="text-light!">
+            Saturn shop
+          </T>
         </Link>
       </nav>
     </header>

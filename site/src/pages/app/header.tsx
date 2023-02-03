@@ -1,13 +1,19 @@
 import { Icon } from "@iconify/react";
 import * as Menu from "@radix-ui/react-popover";
+import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { Logo, T } from "components";
+import { Logo, Spinner, T } from "components";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { authState } from "states/auth";
+import { authState, useAuthHeader } from "states/auth";
 import { currencyState } from "states/commerce";
+import f from "utils/f";
 
 const Mainheader = () => {
+  const headers = useAuthHeader();
+  const { data, isLoading } = useQuery(["cart", "count"], () =>
+    f("/cart/count", { headers }).then((res) => res.data)
+  );
   const [currency, setcurrency] = useRecoilState(currencyState);
   const { user } = useRecoilValue(authState)!;
   const nav = useNavigate();
@@ -31,13 +37,15 @@ const Mainheader = () => {
             <option value="COP">COP</option>
             <option value="USD">USD</option>
           </select>
-          <div className={styles.actions}>
+          <Link to="/cart" className={styles.cart}>
             <Icon
               className={styles.icons}
               icon="fluent:shopping-bag-16-regular"
             />
-            <div className={clsx(styles.badge)}>0</div>
-          </div>
+            <div className={clsx(styles.badge)}>
+              {isLoading ? <Spinner /> : data}
+            </div>
+          </Link>
 
           <Menu.Root>
             <Menu.Trigger>
@@ -87,7 +95,7 @@ const styles = {
   shopicon: "relative inline-flex items-center",
   currencies:
     "bg-transparent text-[#414040] text-sm outline-none cursor-pointer",
-  actions: "relative inline-flex items-center cursor-pointer",
+  cart: "relative inline-flex items-center",
   badge: [
     "absolute inline-flex items-center justify-center w-5 h-5 text-xs",
     "font-bold text-white bg-brand border-2 border-white rounded-full",

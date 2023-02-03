@@ -17,14 +17,9 @@ const items = [
     to: "/admin/categories",
   },
   {
-    title: "Orders",
-    icon: "fluent:cart-16-filled",
-    to: "/admin/orders",
-  },
-  {
-    title: "Customers",
-    icon: "fluent:people-community-16-filled",
-    to: "/admin/customers",
+    title: "Store",
+    icon: "fluent:shopping-bag-16-filled",
+    to: "/",
   },
 ];
 
@@ -50,7 +45,7 @@ const AdminSidebar = () => {
             <T className="text-white! text-lg">
               {[user["first_name"], user["last_name"]].join(" ")}
             </T>
-            <T>{user["email"]}</T>
+            <T className="text-gray-4!">{user["email"]}</T>
           </div>
         </div>
         <ul className="space-y-2 grow overflow-y-auto">

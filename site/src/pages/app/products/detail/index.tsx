@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button, Spinner, T } from "components";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -10,12 +10,17 @@ import f from "utils/f";
 
 const ProductDetail: FC<any> = () => {
   const headers = useAuthHeader();
+  const client = useQueryClient();
   const { id } = useParams();
   const { data, isLoading } = useQuery(["app", "product", id], () =>
     f(`/catalog/products/${id}`, { headers }).then((res) => res.data)
   );
   const [qt, setqt] = useState(1);
   const price = useRecoilValue(convertFromSymbol(data?.["price"] || 0));
+  const add = () =>
+    f
+      .post("/cart", { ...data, stock: qt }, { headers })
+      .then(() => client.invalidateQueries(["cart"]));
 
   if (isLoading) return <Spinner />;
 
@@ -32,7 +37,7 @@ const ProductDetail: FC<any> = () => {
           ${price.toLocaleString(undefined, { maximumFractionDigits: 2 })}
         </T>
         <div className="flex items-center gap4 my4">
-          <Button className="p3! px8!">
+          <Button className="p3! px8!" onClick={add}>
             <Icon
               icon="fluent:shopping-bag-16-regular"
               className="h6 w6"
